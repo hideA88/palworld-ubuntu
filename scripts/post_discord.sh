@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ### Discord Webhook Message
 UPDATE_RESERVED_MESSAGE="@everyone 新しいバージョンが見つかったにゃ!!更新があるからサーバー再起動を5分後にするにゃ!タイトルに戻ってセーブするにゃ!!"
@@ -13,11 +13,11 @@ RESTART_FAILURE_MESSAGE="$ADMIN_GROUP_MENTION サーバー再起動に失敗し�
 
 free_memory_message() {
     free_per=$1
-    if [ $(echo "$free_memory_per >= 50" | bc -l) -eq 1 ]; then
+    if [ "$(echo "$free_per >= 50" | bc)" -eq 1 ]; then
         post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！余裕だにゃ!!"
-    elif [ $(echo "$free_memory_per >= 25" | bc -l) -eq 1 ]; then
+    elif [ "$(echo "$free_per >= 25" | bc)" -eq 1 ]; then
         post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！まだ焦るタイミングではないにゃ"
-    elif [ $(echo "$free_memory_per >= 10" | bc -l) -eq 1 ]; then
+    elif [ "$(echo "$free_per >= 10" | bc)" -eq 1 ]; then
         post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！そろそろやばいかもにゃ！セーブの準備しとくにゃ!"
     else
         post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！やばいにゃ！！今すぐ再起動したほうがいいにゃ!!"
@@ -29,7 +29,7 @@ restart_reserve_message() {
     if [ $wait_time -eq 0 ]; then
         post_discord_webhook "$RESTART_START_MESSAGE"
     else
-        minutes=$((seconds / 60))
+        minutes=$((wait_time / 60))
         post_discord_webhook "$RESTART_START_MESSAGE $minutes分後に再起動するにゃ!"
     fi
 }

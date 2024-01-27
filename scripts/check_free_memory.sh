@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 get_free_memory_percentage() {
     # メモリおよびスワップの情報を取得
@@ -31,14 +31,14 @@ check_free_memory() {
     free_memory_message $free_per
 
     need_restart=0
-    if [ $(echo "$free_per <= 10" | bc -l) -eq 1 ]; then
+    if [ "$(echo "$free_per <= 10" | bc)" -eq 1 ]; then
         echo "Freeメモリの割合が10%以下です。"
         restart_palworld $RESTART_WAIT_TIME
         need_restart=1
     else
         need_restart=0
     fi
-    echo "$need_restart"
+    return "$need_restart"
 }
 
 # $0 からファイル名のみを抽出

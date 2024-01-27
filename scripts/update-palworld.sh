@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Steam CMD path
 Steamcmd="/usr/games/steamcmd"

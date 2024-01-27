@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # スクリプトが配置されているディレクトリを取得
 script_directory=$(dirname "$(readlink -f "$0")")
