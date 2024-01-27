@@ -3,9 +3,9 @@ SERVICE_NAME="palworld-dedicated.service"
 restart_palworld() {
         post_discord_webhook "$RESTART_START_MESSAGE"
         echo "Restart $SERVICE_NAME because an game update exists."
-        sudo systemctl stop $SERVICE_NAME
+        systemctl stop $SERVICE_NAME
         sleep 3
-        sudo systemctl start $SERVICE_NAME
+        systemctl start $SERVICE_NAME
 
         # systemctl status コマンドでサービスのステータスを確認
         status=$(sudo systemctl status $SERVICE_NAME)
