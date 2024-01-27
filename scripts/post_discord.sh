@@ -42,11 +42,11 @@ free_memory_message() {
     prev_free_per=$(get_previous_memory)
 
     if [ "$(check_threshold "$prev_free_per" "$threshold_10")" -eq 1 ] && [ "$(check_threshold "$free_per" "$threshold_10")" -eq 0 ]; then
-        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！やばいにゃ！！今すぐ再起動したほうがいいにゃ!!"
+        post_discord_webhook "$ADMIN_GROUP_MENTION 現在のメモリ空き容量は$free_per%にゃ！！やばいにゃ！！今すぐ再起動したほうがいいにゃ!!"
     fi
 
     if [ "$(check_threshold "$prev_free_per" "$threshold_25")" -eq 1 ] && [ "$(check_threshold "$free_per" "$threshold_25")" -eq 0 ]; then
-        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！そろそろやばいかもにゃ！セーブの準備しとくにゃ!"
+        post_discord_webhook "@everyone 現在のメモリ空き容量は$free_per%にゃ！！そろそろやばいかもにゃ！セーブの準備しとくにゃ!"
     fi
 
     if [ "$(check_threshold "$prev_free_per" "$threshold_50")" -eq 1 ] && [ "$(check_threshold "$free_per" "$threshold_50")" -eq 0 ]; then
