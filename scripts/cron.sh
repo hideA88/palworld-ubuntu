@@ -8,11 +8,11 @@
 script_directory=$(dirname "$(readlink -f "$0")")
 
 # load script
-#. "$script_directory/load_env.sh"
-#. "$script_directory/post_discord.sh"
+. "$script_directory/load_env.sh"
+. "$script_directory/post_discord.sh"
 . "$script_directory/check_free_memory.sh"
-#. "$script_directory/restart_service.sh"
-#. "$script_directory/update-palworld.sh"
+. "$script_directory/restart_service.sh"
+. "$script_directory/update-palworld.sh"
 
 # 現在の時間と分を取得
 current_hour=$(date +%H)
