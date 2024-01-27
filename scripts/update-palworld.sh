@@ -1,21 +1,5 @@
 #!/bin/sh
 
-# for Discord Webhook settings
-## 以下の変数は.envから読み込む(.env.templateをコピーして.envにリネームしてください)
-# DISCORD_WEBHOOK_URL, ADMIN_GROUP_MENTION
-
-# .env ファイルのパスを構築
-script_directory=$(dirname "$(readlink -f "$0")")
-
-# load script
-. "$script_directory/load_env.sh"
-. "$script_directory/post_discord.sh"
-. "$script_directory/check_free_memory.sh"
-. "$script_directory/restart_service.sh"
-
-### 5分間
-RESTART_WAIT_TIME=300
-
 # Steam CMD path
 Steamcmd="/usr/games/steamcmd"
 install_dir="/home/steam/Steam/steamapps/common/PalServer"
@@ -55,28 +39,3 @@ check_update() {
                 fi
         fi
 }
-
-### 以下メイン処理 ###
-
-# 強制再起動オプションの確認
-if [ "$#" -gt 0 ] && [ "$1" = "--force-restart" ]; then
-        restart_palworld $RESTART_WAIT_TIME
-        return_value=$?
-        exit $return_value
-fi
-
-if [ "$#" -gt 0 ] && [ "$1" = "--force-restart-now" ]; then
-        read -p "本当に今すぐ再起動を実行しますか？ (y/n): " user_input
-        if [ "$user_input" = "y" ] || [ "$user_input" = "Y" ]; then
-                echo "再起動を実行します。"
-                restart_palworld 0
-                return_value=$?
-                exit $return_value
-        else
-                echo "キャンセルしました。"
-                exit 0
-        fi
-fi
-
-# check update
-check_update
