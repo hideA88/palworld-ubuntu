@@ -14,26 +14,24 @@ free_memory_message() {
     free_per=$1
     echo "現在残りのメモリ空き容量は$free_per%です"
     if [ $(echo "$free_memory_per >= 50" | bc -l) -eq 1 ]; then
-        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！余裕だにゃ！！"
+        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！余裕だにゃ!!"
     elif [ $(echo "$free_memory_per >= 25" | bc -l) -eq 1 ]; then
         post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！まだ焦るタイミングではないにゃ"
     elif [ $(echo "$free_memory_per >= 10" | bc -l) -eq 1 ]; then
-        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！そろそろやばいかもにゃ！セーブの準備しとくにゃ！"
+        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！そろそろやばいかもにゃ！セーブの準備しとくにゃ!"
     else
-        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！やばいにゃ！！今すぐ再起動したほうがいいにゃ！！"
+        post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！やばいにゃ！！今すぐ再起動したほうがいいにゃ!!"
     fi
 }
 
-restart_reserve_message(){
+restart_reserve_message() {
     wait_time=$1
-    mes=""
     if [ $wait_time -eq 0 ]; then
-        mes="@everyone サーバー再起動を今すぐするにゃ!再起動に備えるにゃ!!"
+        post_discord_webhook "$RESTART_START_MESSAGE"
     else
-        wait_min=($1/60)
-        mes="@everyone サーバー再起動を${wait_min}分後にするにゃ!タイトルに戻ってセーブするにゃ!!"
+        minutes=$((seconds / 60))
+        post_discord_webhook "$RESTART_START_MESSAGE $minutes分後に再起動するにゃ!"
     fi
-    post_discord_webhook "$mes"
 }
 
 post_discord_webhook() {
