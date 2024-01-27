@@ -3,7 +3,8 @@
 ### Discord Webhook Message
 UPDATE_RESERVED_MESSAGE="@everyone 新しいバージョンが見つかったにゃ!!更新があるからサーバー再起動を5分後にするにゃ!タイトルに戻ってセーブするにゃ!!"
 UPDATE_SUCCESS_MESSAGE="サーバー更新が完了したにゃ!!3時間後にまたチェックするにゃ!"
-NOT_RESTART_MESSAGE="今回は更新がなかったにゃ。3時間後にまたチェックするにゃ"
+NOT_UPDATE_MESSAGE="今回は更新がなかったにゃ。3時間後にまたチェックするにゃ"
+NOT_RESTART_MESSAGE="今回は再起動なしにゃ！"
 
 FORCE_RESTART_SUCCESS_MESSAGE="サーバー再起動が完了したにゃ!!協力感謝するにゃ!"
 

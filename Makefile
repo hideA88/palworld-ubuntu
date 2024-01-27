@@ -5,7 +5,7 @@ init:
 
 .PHONY: check-memory
 check-memory:
-	./scripts/check-memory.sh
+	./scripts/check_free_memory.sh
 
 .PHONY: restart-palworld
 restart-palworld:

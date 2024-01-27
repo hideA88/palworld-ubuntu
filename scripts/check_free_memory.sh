@@ -25,10 +25,26 @@ get_free_memory_percentage() {
     echo "$free_memory_percentage"
 }
 
+check_free_memory() {
+    free_per=$(get_free_memory_percentage)
+    #free_memory_message $free_per
+    need_restart=0
+    if [ $(echo "$free_per <= 10" | bc -l) -eq 1 ]; then
+        echo "Freeメモリの割合が10%以下です。"
+        restart_palworld $RESTART_WAIT_TIME
+        need_restart=1
+    else
+        need_restart=0
+    fi
+    echo "$need_restart"
+}
+
 # $0 からファイル名のみを抽出
 entry_script_name=$(basename "$0")
 
 if [ "$entry_script_name" = "check_free_memory.sh" ]; then
     free_percentage=$(get_free_memory_percentage)
     echo "Freeメモリの割合（スワップ含む）: $free_percentage%"
+
+    exit 0
 fi

@@ -19,22 +19,13 @@ check_update() {
         # Check if updated.
         if [ $OLD_Build = $NEW_Build ]; then
                 echo "Build number matches."
-                free_per=get_free_memory_percentage
-                free_memory_message $free_per
-                if [ $(echo "$free_memory_percentage <= 10" | bc -l) -eq 1 ]; then
-                        echo "Freeメモリの割合が10%以下です。"
-                        restart_palworld $RESTART_WAIT_TIME
-                else
-                        echo "Freeメモリの割合は10%を超えています。"
-                        post_discord_webhook "$NOT_RESTART_MESSAGE"
-                fi
+                post_discord_webhook "$NOT_UPDATE_MESSAGE"
         else
+                echo "find update. $NEW_Build > $OLD_Build"
                 post_discord_webhook "$UPDATE_RESERVED_MESSAGE"
-
-                restart_palworld $RESTART_WAIT_TIME
-                return_value=$?
+                result=$(restart_palworld $RESTART_WAIT_TIME)
                 # 返り値に基づく条件分岐
-                if [ $return_value -eq 0 ]; then
+                if [ $result -eq 0 ]; then
                         post_discord_webhook "$UPDATE_SUCCESS_MESSAGE"
                 fi
         fi
