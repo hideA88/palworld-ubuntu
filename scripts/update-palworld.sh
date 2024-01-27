@@ -39,16 +39,15 @@ check_update() {
                 free_memory_message $free_per
                 if [ $(echo "$free_memory_percentage <= 10" | bc -l) -eq 1 ]; then
                         echo "Freeメモリの割合が10%以下です。"
-                        force_restart $RESTART_WAIT_TIME
+                        restart_palworld $RESTART_WAIT_TIME
                 else
                         echo "Freeメモリの割合は10%を超えています。"
                         post_discord_webhook "$NOT_RESTART_MESSAGE"
                 fi
         else
                 post_discord_webhook "$UPDATE_RESERVED_MESSAGE"
-                sleep $RESTART_WAIT_TIME
 
-                restart_palworld
+                restart_palworld $RESTART_WAIT_TIME
                 return_value=$?
                 # 返り値に基づく条件分岐
                 if [ $return_value -eq 0 ]; then
@@ -61,7 +60,7 @@ check_update() {
 
 # 強制再起動オプションの確認
 if [ "$#" -gt 0 ] && [ "$1" = "--force-restart" ]; then
-        force_restart $RESTART_WAIT_TIME
+        restart_palworld $RESTART_WAIT_TIME
         return_value=$?
         exit $return_value
 fi
@@ -70,7 +69,7 @@ if [ "$#" -gt 0 ] && [ "$1" = "--force-restart-now" ]; then
         read -p "本当に今すぐ再起動を実行しますか？ (y/n): " user_input
         if [ "$user_input" = "y" ] || [ "$user_input" = "Y" ]; then
                 echo "再起動を実行します。"
-                force_restart 1
+                restart_palworld 0
                 return_value=$?
                 exit $return_value
         else

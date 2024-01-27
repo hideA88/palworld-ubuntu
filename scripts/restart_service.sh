@@ -1,6 +1,6 @@
 SERVICE_NAME="palworld-dedicated.service"
 
-restart_palworld() {
+_restart_palworld() {
         post_discord_webhook "$RESTART_START_MESSAGE"
         echo "Restart $SERVICE_NAME because an game update exists."
         systemctl stop $SERVICE_NAME
@@ -24,15 +24,19 @@ restart_palworld() {
         fi
 }
 
-force_restart() {
+restart_palworld() {
         wait_time=$1
-
         echo "Force restart option detected. $SERVICE_NAME force restart."
-        post_discord_webhook "$FORCE_RESTART_RESERVED_MESSAGE"
+        restart_reserve_message $wait_time
+        if [ $wait_time -eq 0 ]; then
+                echo "Wait time is 0. Restart immediately."
+                _restart_palworld
+        else
+                echo "Wait time is $wait_time seconds. Restart after $wait_time seconds."
+                sleep $wait_time
+                _restart_palworld
+        fi
 
-        sleep $wait_time
-
-        restart_palworld
         # ここで早期リターンする
         return_value=$?
         # 返り値に基づく条件分岐
