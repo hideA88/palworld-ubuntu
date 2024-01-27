@@ -13,7 +13,6 @@ RESTART_FAILURE_MESSAGE="$ADMIN_GROUP_MENTION サーバー再起動に失敗し�
 
 free_memory_message() {
     free_per=$1
-    echo "現在残りのメモリ空き容量は$free_per%です"
     if [ $(echo "$free_memory_per >= 50" | bc -l) -eq 1 ]; then
         post_discord_webhook "現在のメモリ空き容量は$free_per%にゃ！！余裕だにゃ!!"
     elif [ $(echo "$free_memory_per >= 25" | bc -l) -eq 1 ]; then

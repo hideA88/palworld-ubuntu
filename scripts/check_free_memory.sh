@@ -27,7 +27,9 @@ get_free_memory_percentage() {
 
 check_free_memory() {
     free_per=$(get_free_memory_percentage)
-    #free_memory_message $free_per
+    echo "現在残りのメモリ空き容量は$free_per%です"
+    free_memory_message $free_per
+
     need_restart=0
     if [ $(echo "$free_per <= 10" | bc -l) -eq 1 ]; then
         echo "Freeメモリの割合が10%以下です。"
