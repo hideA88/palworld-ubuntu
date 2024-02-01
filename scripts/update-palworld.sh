@@ -19,14 +19,29 @@ check_update() {
         # Check if updated.
         if [ $OLD_Build = $NEW_Build ]; then
                 echo "Build number matches."
-                post_discord_webhook "$NOT_UPDATE_MESSAGE"
         else
                 echo "find update. $NEW_Build > $OLD_Build"
                 post_discord_webhook "$UPDATE_RESERVED_MESSAGE"
-                result=$(restart_palworld $RESTART_WAIT_TIME)
+                restart_palworld $RESTART_WAIT_TIME
+		result=$?
+
                 # 返り値に基づく条件分岐
-                if [ $result -eq 0 ]; then
+                if [ "$result" -eq 0 ]; then
                         post_discord_webhook "$UPDATE_SUCCESS_MESSAGE"
                 fi
         fi
 }
+
+entry_script_name=$(basename "$0")
+
+
+if [ "$entry_script_name" = "update-palworld.sh" ]; then
+	script_directory=$(dirname "$(readlink -f "$0")")
+	. "$script_directory/load_env.sh"
+	. "$script_directory/check_free_memory.sh"
+	. "$script_directory/post_discord.sh"
+	. "$script_directory/restart_service.sh"
+
+	check_update
+fi
+

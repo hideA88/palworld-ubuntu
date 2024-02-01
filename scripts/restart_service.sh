@@ -53,6 +53,14 @@ entry_script_name=$(basename "$0")
 
 # 直接ファイルを起動したときのみ実行
 if [ "$entry_script_name" = "restart_service.sh" ]; then
+	# load script
+	script_directory=$(dirname "$(readlink -f "$0")")
+	. "$script_directory/load_env.sh"
+	. "$script_directory/check_free_memory.sh"
+	. "$script_directory/post_discord.sh"
+	. "$script_directory/update-palworld.sh"
+
+
         # 強制再起動オプションの確認
         if [ "$#" -gt 0 ] && [ "$1" = "--force-restart" ]; then
                 restart_palworld $RESTART_WAIT_TIME
