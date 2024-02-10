@@ -6,7 +6,6 @@ SERVICE_NAME="palworld-dedicated.service"
 RESTART_WAIT_TIME=300
 
 _restart_palworld() {
-        post_discord_webhook "$RESTART_START_MESSAGE"
         echo "Restart $SERVICE_NAME because an game update exists."
         systemctl stop $SERVICE_NAME
         sleep 3
